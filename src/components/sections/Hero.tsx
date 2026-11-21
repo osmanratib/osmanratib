@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import Magnetic from "@/components/motion/Magnetic";
@@ -23,33 +23,35 @@ export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const isTouch = useIsTouch();
   const dhakaTime = useDhakaTime();
+  const [isHovered, setIsHovered] = useState(false);
 
-  // 3D Parallax Tilt for Osman's centered photo (about.jpg)
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  // Smooth mouse tracking for depth parallax
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  const mouseXSpring = useSpring(x, { stiffness: 180, damping: 20 });
-  const mouseYSpring = useSpring(y, { stiffness: 180, damping: 20 });
+  const springConfig = { damping: 25, stiffness: 200, mass: 0.4 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
+  // Parallax translation for the image and the offset wireframe shadow
+  const photoX = useTransform(smoothX, [-0.5, 0.5], [-16, 16]);
+  const photoY = useTransform(smoothY, [-0.5, 0.5], [-12, 12]);
+  const shadowX = useTransform(smoothX, [-0.5, 0.5], [16, -16]);
+  const shadowY = useTransform(smoothY, [-0.5, 0.5], [12, -12]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isTouch) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(xPct);
+    mouseY.set(yPct);
   };
 
   const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
+    mouseX.set(0);
+    mouseY.set(0);
+    setIsHovered(false);
   };
 
   return (
@@ -88,13 +90,13 @@ export default function Hero() {
       </div>
 
       {/* Main Centered Content Container */}
-      <div className="px-6 md:px-12 flex flex-col items-center justify-center my-auto py-6 max-w-5xl mx-auto w-full">
+      <div className="px-6 md:px-12 flex flex-col items-center justify-center my-auto py-4 max-w-5xl mx-auto w-full">
         {/* Eyebrow Label */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-3 font-mono text-xs tracking-widest uppercase text-black/60 mb-4"
+          className="flex items-center gap-3 font-mono text-xs tracking-widest uppercase text-black/60 mb-3"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-black/60" />
           <span className="font-semibold text-black">Creative Developer & UI Engineer</span>
@@ -112,53 +114,117 @@ export default function Hero() {
           </motion.h1>
         </div>
 
-        {/* Centered Hero Photo (about.jpg) with Interactive 3D Tilt */}
-        <motion.div
+        {/* CENTERED HERO PHOTO WITH DISTINCTIVE CINEMATIC ANIMATIONS */}
+        <div
           onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={handleMouseLeave}
-          style={{
-            rotateX: isTouch ? 0 : rotateX,
-            rotateY: isTouch ? 0 : rotateY,
-            transformStyle: "preserve-3d",
-          }}
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.76, 0, 0.24, 1] }}
-          className="relative my-8 w-64 sm:w-72 md:w-80 group cursor-pointer"
+          className="relative my-7 w-64 sm:w-72 md:w-80 flex items-center justify-center cursor-pointer select-none"
         >
-          {/* Architectural Crosshair Corners */}
-          <span className="absolute -top-3 -left-3 font-mono text-xs text-black/40 select-none z-20">+</span>
-          <span className="absolute -top-3 -right-3 font-mono text-xs text-black/40 select-none z-20">+</span>
-          <span className="absolute -bottom-3 -left-3 font-mono text-xs text-black/40 select-none z-20">+</span>
-          <span className="absolute -bottom-3 -right-3 font-mono text-xs text-black/40 select-none z-20">+</span>
+          {/* 1. Behind: Offset Architectural Wireframe Layer with Counter-Parallax */}
+          <motion.div
+            style={{
+              x: isTouch ? 0 : shadowX,
+              y: isTouch ? 0 : shadowY,
+            }}
+            className="absolute inset-0 border-2 border-black/30 rounded-xs -z-10 translate-x-3 translate-y-3 pointer-events-none transition-transform"
+          />
 
-          {/* Centered Framed Photo Card */}
-          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xs border-2 border-black/15 bg-neutral-100 shadow-xl transition-all duration-500 group-hover:border-black group-hover:shadow-2xl">
-            <Image
-              src="/about.jpg"
-              alt="Osman Ratib"
-              fill
-              sizes="(max-width: 768px) 280px, 320px"
-              className="object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-              priority
-            />
-
-            {/* Minimal Clean Tag */}
-            <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-2.5 border border-black/10 rounded-xs shadow-md flex items-center justify-between text-left">
-              <div>
-                <span className="font-heading text-xs font-bold tracking-tight text-black uppercase block">
-                  Osman Ratib
-                </span>
-                <span className="font-mono text-[9px] tracking-wider text-black/50 uppercase">
-                  Dhaka, Bangladesh
-                </span>
-              </div>
-              <span className="font-mono text-[9px] bg-black text-white px-2 py-0.5 rounded-xs uppercase">
-                Available
-              </span>
+          {/* 2. Floating Animated Spinning Gallery Seal Stamp */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 16, ease: "linear" }}
+            className="absolute -top-7 -right-7 sm:-top-9 sm:-right-9 z-30 pointer-events-none hidden sm:block"
+          >
+            <div className="relative h-20 w-20 flex items-center justify-center">
+              <svg viewBox="0 0 100 100" className="w-full h-full fill-black">
+                <path
+                  id="stampCircle"
+                  d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                  fill="none"
+                />
+                <text className="text-[10px] uppercase font-mono tracking-widest font-semibold">
+                  <textPath href="#stampCircle">
+                    • OSMAN RATIB • CREATIVE DEV • 2026 •
+                  </textPath>
+                </text>
+              </svg>
+              <div className="absolute h-3 w-3 rounded-full bg-emerald-500" />
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          {/* 3. Main Photo Card with Smooth Sine Wave Levitation & Parallax Motion */}
+          <motion.div
+            style={{
+              x: isTouch ? 0 : photoX,
+              y: isTouch ? 0 : photoY,
+            }}
+            animate={{
+              y: [0, -8, 0],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 4,
+              ease: "easeInOut",
+            }}
+            className="relative aspect-[3/4] w-full overflow-hidden rounded-xs border-2 border-black bg-neutral-100 shadow-2xl group"
+          >
+            {/* Cinematic Curtain Mask Unclip on Load */}
+            <motion.div
+              initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+              animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+              transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
+              className="relative h-full w-full"
+            >
+              <Image
+                src="/about.jpg"
+                alt="Osman Ratib"
+                fill
+                sizes="(max-width: 768px) 280px, 320px"
+                className={`object-cover transition-all duration-700 ${
+                  isHovered ? "grayscale-0 scale-105" : "grayscale contrast-115 scale-100"
+                }`}
+                priority
+              />
+
+              {/* 4. Light Sweep Shimmer Flare on Hover */}
+              <motion.div
+                animate={
+                  isHovered
+                    ? { x: ["-120%", "200%"] }
+                    : { x: "-120%" }
+                }
+                transition={{ duration: 0.9, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/35 to-transparent skew-x-12 pointer-events-none"
+              />
+
+              {/* Corner Crosshair Reticles */}
+              <span className="absolute top-2 left-2 font-mono text-[10px] text-white/70 select-none z-10">+</span>
+              <span className="absolute top-2 right-2 font-mono text-[10px] text-white/70 select-none z-10">+</span>
+
+              {/* Minimal Bottom Glass Pill */}
+              <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-2.5 border border-black/10 rounded-xs shadow-md flex items-center justify-between text-left">
+                <div>
+                  <span className="font-heading text-xs font-bold tracking-tight text-black uppercase block">
+                    Osman Ratib
+                  </span>
+                  <span className="font-mono text-[9px] tracking-wider text-black/50 uppercase">
+                    Dhaka, Bangladesh
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                  </span>
+                  <span className="font-mono text-[9px] font-semibold text-black uppercase">
+                    Active
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
 
         {/* Clean Subtitle in Inter */}
         <motion.p
