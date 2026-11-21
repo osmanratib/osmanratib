@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 
 interface PreloaderProps {
@@ -12,14 +13,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    // Check session storage
-    if (typeof window !== "undefined" && sessionStorage.getItem("portfolio_visited")) {
-      setIsDone(true);
-      onComplete();
-      return;
-    }
-
-    const duration = 1200; // ms
+    const duration = 1250; // ms
     const startTime = performance.now();
 
     const updateCounter = (currentTime: number) => {
@@ -34,9 +28,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       } else {
         setTimeout(() => {
           setIsDone(true);
-          sessionStorage.setItem("portfolio_visited", "true");
-          setTimeout(onComplete, 600);
-        }, 120);
+          setTimeout(onComplete, 650);
+        }, 150);
       }
     };
 
@@ -45,7 +38,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setIsDone(true);
-        sessionStorage.setItem("portfolio_visited", "true");
         onComplete();
       }
     };
@@ -57,12 +49,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [onComplete]);
-
-  const handleSkip = () => {
-    setIsDone(true);
-    sessionStorage.setItem("portfolio_visited", "true");
-    onComplete();
-  };
 
   return (
     <AnimatePresence>
@@ -76,45 +62,71 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         >
           {/* Top metadata */}
           <div className="flex items-center justify-between">
-            <div className="font-mono text-xs tracking-wider uppercase text-white/50">
-              01 // 2026 Portfolio
+            <div className="font-mono text-xs tracking-wider uppercase text-white/40">
+              01 // System Load
             </div>
-            <button
-              onClick={handleSkip}
-              className="font-mono text-xs tracking-wider uppercase text-white/40 hover:text-white transition-colors cursor-pointer"
-            >
-              Skip [ESC]
-            </button>
+            <div className="font-mono text-xs tracking-wider uppercase text-white/40">
+              [ESC] to skip
+            </div>
           </div>
 
-          {/* Center Name Reveal */}
-          <div className="my-auto space-y-3">
-            <div className="overflow-hidden">
+          {/* Center Stage: ANIMATED LOGO REVEAL */}
+          <div className="my-auto flex flex-col items-center justify-center">
+            <div className="relative flex items-center justify-center">
+              {/* Pulsing Emerald Halo */}
               <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
+                animate={{
+                  scale: [1, 1.4, 1],
+                  opacity: [0.3, 0.7, 0.3],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "easeInOut",
+                }}
+                className="absolute h-36 w-36 rounded-full bg-emerald-500/20 blur-xl pointer-events-none"
+              />
+
+              {/* Concentric Rotating Ring */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+                className="absolute h-32 w-32 rounded-full border border-dashed border-white/25 pointer-events-none"
+              />
+
+              {/* Logo Animated Reveal */}
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0, rotate: -12 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
                 transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-                className="font-display text-[clamp(4.5rem,11vw,11rem)] leading-none uppercase tracking-tight"
+                className="relative h-24 w-24 md:h-28 md:w-28 rounded-full bg-white/10 p-3.5 backdrop-blur-md border border-white/30 shadow-2xl flex items-center justify-center"
               >
-                Osman Ratib
+                <Image
+                  src="/logo.png"
+                  alt="Osman Ratib"
+                  fill
+                  sizes="112px"
+                  className="object-contain p-2 invert"
+                  priority
+                />
               </motion.div>
             </div>
-            <div className="overflow-hidden">
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: [0.76, 0, 0.24, 1] }}
-                className="font-mono text-xs md:text-sm tracking-wider uppercase text-emerald-400 font-medium"
-              >
-                Creative Developer & UI Engineer
-              </motion.div>
-            </div>
+
+            {/* Sub-label */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-6 font-mono text-xs tracking-widest uppercase text-emerald-400 font-semibold"
+            >
+              Osman Ratib
+            </motion.div>
           </div>
 
           {/* Bottom Counter */}
           <div className="flex items-end justify-between border-t border-white/10 pt-6">
             <div className="font-mono text-xs tracking-wider uppercase text-white/40">
-              Loading
+              Loading Experience
             </div>
             <div className="font-display text-5xl md:text-7xl tabular-nums">
               {String(count).padStart(3, "0")}

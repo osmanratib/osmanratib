@@ -9,16 +9,11 @@ import About from "@/components/sections/About";
 import Capabilities from "@/components/sections/Capabilities";
 
 export default function HomePage() {
-  const [showPreloader, setShowPreloader] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Check if user has already visited in this session
-    const hasVisited = sessionStorage.getItem("portfolio_visited");
-    if (!hasVisited) {
-      setShowPreloader(true);
-    }
   }, []);
 
   return (
