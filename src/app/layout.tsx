@@ -7,25 +7,27 @@ import SmoothScroll from "@/components/providers/SmoothScroll";
 import PageTransition from "@/components/motion/PageTransition";
 
 export const metadata: Metadata = {
-  title: "Osman Ratib — Software Engineer & Digital Craftsman",
+  title: "Osman Ratib — Full-Stack Creative Developer & UI Architect",
   description:
-    "Editorial / Swiss-gallery portfolio of Osman Ratib, a web developer from Bangladesh building digital experiences with Next.js, TypeScript, and motion design.",
+    "Portfolio of Osman Ratib, a full-stack creative developer from Bangladesh building high-performance digital flagships, tactile micro-interactions, and scalable design architectures.",
   keywords: [
     "Osman Ratib",
-    "Web Developer",
+    "Creative Developer",
     "Software Engineer",
-    "Bangladesh",
-    "Next.js",
+    "UI Architect",
+    "Next.js 16",
     "TypeScript",
-    "Awwwards",
     "GSAP",
+    "Tailwind CSS",
+    "Bangladesh",
+    "Awwwards",
   ],
   authors: [{ name: "Osman Ratib", url: "https://osmanratib.dev" }],
   creator: "Osman Ratib",
   metadataBase: new URL("https://osmanratib.dev"),
   openGraph: {
-    title: "Osman Ratib — Software Engineer & Digital Craftsman",
-    description: "Editorial monograph & interactive portfolio of Osman Ratib.",
+    title: "Osman Ratib — Full-Stack Creative Developer & UI Architect",
+    description: "High-performance digital flagships, motion-driven UI, and modern web architectures.",
     url: "https://osmanratib.dev",
     siteName: "Osman Ratib Portfolio",
     locale: "en_US",
@@ -33,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Osman Ratib — Software Engineer & Digital Craftsman",
-    description: "Editorial monograph & interactive portfolio of Osman Ratib.",
+    title: "Osman Ratib — Full-Stack Creative Developer & UI Architect",
+    description: "High-performance digital flagships, motion-driven UI, and modern web architectures.",
     creator: "@osmanratib",
   },
   icons: {
@@ -54,11 +56,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Instrument+Serif:ital@0;1&display=swap"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Syne:wght@700;800&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-white text-black selection:bg-black selection:text-white font-sans">
+      <body className="min-h-screen bg-white text-zinc-950 selection:bg-black selection:text-white font-sans">
         <SmoothScroll>
           <Cursor />
           <Header />

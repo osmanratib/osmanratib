@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Instrument Serif", Georgia, serif;
-  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "Geist Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-display: "Syne", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 :root {
+  --font-display: "Syne", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --background: #ffffff;
-  --foreground: #000000;
+  --foreground: #09090b;
 }
 
 * {
@@ -17,13 +20,13 @@
 
 html {
   background-color: #ffffff;
-  color: #000000;
+  color: #09090b;
   scroll-behavior: auto !important;
 }
 
 body {
   background-color: #ffffff;
-  color: #000000;
+  color: #09090b;
   font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -40,8 +43,8 @@ body {
   }
 }
 
-.font-serif {
-  font-family: var(--font-serif);
+.font-display {
+  font-family: var(--font-display);
 }
 
 .font-sans {
@@ -52,7 +55,27 @@ body {
   font-family: var(--font-mono);
 }
 
+/* Backward compatibility / display mapping */
+.font-serif {
+  font-family: var(--font-display);
+}
+
 ::selection {
   background-color: #000000;
   color: #ffffff;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.glass-dark {
+  background: rgba(10, 10, 12, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
