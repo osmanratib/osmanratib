@@ -2,22 +2,22 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col justify-between px-6 md:px-16 pt-36 pb-12">
+    <div className="min-h-screen flex flex-col justify-between px-6 md:px-12 pt-36 pb-12 bg-white">
       <div className="font-mono text-xs tracking-widest uppercase text-black/40">
-        Error 404 / Monograph Missing
+        Error 404 // Folio Not Found
       </div>
 
       <div className="my-auto max-w-4xl py-12">
-        <h1 className="font-serif text-[clamp(4rem,14vw,14rem)] leading-none tracking-tight text-black mb-6">
-          404<span className="italic">.</span>
+        <h1 className="font-display text-[clamp(4.5rem,15vw,15rem)] font-extrabold uppercase leading-none tracking-tight text-black mb-6">
+          404<span className="text-emerald-500">.</span>
         </h1>
-        <p className="font-sans text-xl md:text-2xl text-black/70 max-w-lg mb-10 font-light">
-          The requested folio does not exist or has been relocated to another archive.
+        <p className="font-sans text-xl md:text-2xl text-black/70 max-w-lg mb-10 font-normal">
+          The requested route does not exist or has been relocated to another archive.
         </p>
 
         <Link
           href="/"
-          className="inline-flex items-center gap-2 border border-black bg-black px-6 py-3.5 font-mono text-xs tracking-widest uppercase text-white hover:bg-white hover:text-black transition-colors"
+          className="inline-flex items-center gap-2 border border-black bg-black px-7 py-4 font-mono text-xs font-semibold tracking-widest uppercase text-white hover:bg-white hover:text-black transition-colors"
         >
           <span>← Return to Monograph Front</span>
         </Link>

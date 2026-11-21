@@ -19,14 +19,13 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       return;
     }
 
-    const duration = 1400; // ms
+    const duration = 1300; // ms
     const startTime = performance.now();
 
     const updateCounter = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Easing for counter acceleration/deceleration
       const easeProgress = Math.floor(progress * 100);
       setCount(easeProgress);
 
@@ -36,7 +35,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         setTimeout(() => {
           setIsDone(true);
           sessionStorage.setItem("portfolio_visited", "true");
-          setTimeout(onComplete, 800);
+          setTimeout(onComplete, 700);
         }, 150);
       }
     };
@@ -72,13 +71,13 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           key="preloader"
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
-          transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-50 flex flex-col justify-between bg-black p-8 md:p-16 text-white"
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 z-50 flex flex-col justify-between bg-black p-8 md:p-14 text-white"
         >
           {/* Top metadata */}
           <div className="flex items-center justify-between">
             <div className="font-mono text-xs tracking-widest uppercase text-white/50">
-              01 / Monograph 2026
+              [ 01 // PRODUCTION SYSTEM 2026 ]
             </div>
             <button
               onClick={handleSkip}
@@ -95,7 +94,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-                className="font-serif text-[clamp(2.5rem,7vw,7rem)] tracking-tight leading-none"
+                className="font-display text-[clamp(2.8rem,7.5vw,7.5rem)] font-extrabold uppercase tracking-tight leading-none"
               >
                 Osman Ratib
               </motion.div>
@@ -104,10 +103,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               <motion.div
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
-                transition={{ duration: 0.8, delay: 0.15, ease: [0.76, 0, 0.24, 1] }}
-                className="font-mono text-xs md:text-sm tracking-widest uppercase text-white/60"
+                transition={{ duration: 0.8, delay: 0.12, ease: [0.76, 0, 0.24, 1] }}
+                className="font-mono text-xs md:text-sm tracking-widest uppercase text-emerald-400 font-medium"
               >
-                Selected Works & Interactive Experiences
+                Creative Developer & UI Architect • Next.js 16
               </motion.div>
             </div>
           </div>
@@ -115,9 +114,9 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           {/* Bottom Counter */}
           <div className="flex items-end justify-between border-t border-white/10 pt-6">
             <div className="font-mono text-xs tracking-widest uppercase text-white/40">
-              Loading Assets
+              Synchronizing Core Assets
             </div>
-            <div className="font-serif text-5xl md:text-7xl font-light tabular-nums">
+            <div className="font-display text-5xl md:text-7xl font-extrabold tabular-nums">
               {String(count).padStart(3, "0")}
             </div>
           </div>

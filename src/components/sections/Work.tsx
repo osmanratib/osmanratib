@@ -28,19 +28,23 @@ export default function Work() {
     <section
       id="work"
       onMouseMove={handleMouseMove}
-      className="relative px-6 md:px-16 py-20 md:py-32 border-b border-black/10"
+      className="relative px-6 md:px-12 py-24 md:py-36 border-b border-black/10 bg-white"
     >
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-black/10 pb-6 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-black/10 pb-6 mb-12">
         <div className="flex items-center gap-3">
-          <span className="font-mono text-xs text-black/40">[01]</span>
-          <h2 className="font-mono text-xs tracking-widest uppercase font-semibold text-black">
-            Selected Works
+          <span className="font-mono text-xs font-semibold bg-black text-white px-2 py-0.5 rounded-xs">
+            01
+          </span>
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase text-black">
+            Selected Flagship Works
           </h2>
         </div>
-        <span className="font-mono text-xs tracking-widest uppercase text-black/40">
-          Curated Case Studies (3)
-        </span>
+        <div className="flex items-center gap-4 font-mono text-xs tracking-widest uppercase text-black/50">
+          <span>Production Case Studies (03)</span>
+          <span>•</span>
+          <span>Next.js 16 + TypeScript</span>
+        </div>
       </div>
 
       {/* Floating Image Preview on Cursor (Desktop Only) */}
@@ -48,31 +52,36 @@ export default function Work() {
         <AnimatePresence>
           {hoveredIndex !== null && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.85, rotate: -3 }}
+              initial={{ opacity: 0, scale: 0.88, rotate: -2 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.85, rotate: 2 }}
-              transition={{ duration: 0.25, ease: [0.76, 0, 0.24, 1] }}
+              exit={{ opacity: 0, scale: 0.88, rotate: 2 }}
+              transition={{ duration: 0.22, ease: [0.76, 0, 0.24, 1] }}
               style={{
                 x: smoothX,
                 y: smoothY,
                 translateX: "32px",
                 translateY: "-50%",
               }}
-              className="pointer-events-none fixed z-30 hidden md:block overflow-hidden rounded shadow-2xl border border-black/15 bg-white w-72 h-48 lg:w-88 lg:h-56"
+              className="pointer-events-none fixed z-30 hidden md:block overflow-hidden rounded-sm shadow-2xl border border-black/20 bg-white w-80 h-52 lg:w-96 lg:h-60"
             >
               <div className="relative h-full w-full">
                 <Image
                   src={projects[hoveredIndex].cover}
                   alt={projects[hoveredIndex].title}
                   fill
-                  sizes="360px"
+                  sizes="400px"
                   className="object-cover"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-end p-4">
-                  <span className="font-mono text-[10px] tracking-widest uppercase text-white/90">
-                    Explore Case Study →
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 text-white">
+                  <div>
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-emerald-400 block mb-0.5">
+                      {projects[hoveredIndex].category}
+                    </span>
+                    <span className="font-display text-lg font-bold tracking-tight">
+                      Explore Case Study →
+                    </span>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -85,61 +94,78 @@ export default function Work() {
         {projects.map((project, index) => {
           const isHovered = hoveredIndex === index;
           return (
-            <Link
+            <div
               key={project.slug}
-              href={`/work/${project.slug}`}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className="group block relative py-8 md:py-14 transition-colors duration-300 focus-visible:outline-none"
+              className="group relative py-10 md:py-16 transition-colors duration-300"
             >
               {/* Background hover tint */}
               <div
-                className={`absolute inset-0 -mx-6 md:-mx-16 px-6 md:px-16 transition-colors duration-300 pointer-events-none ${
-                  isHovered ? "bg-black/[0.02]" : "bg-transparent"
+                className={`absolute inset-0 -mx-6 md:-mx-12 px-6 md:px-12 transition-colors duration-300 pointer-events-none ${
+                  isHovered ? "bg-neutral-50" : "bg-transparent"
                 }`}
               />
 
-              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                {/* Index + Title */}
-                <div className="flex items-start md:items-center gap-6 md:gap-12">
-                  <span className="font-mono text-xs md:text-sm text-black/35 font-light pt-1 md:pt-0">
-                    {String(index + 1).padStart(2, "0")}
+              <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                {/* Index + Title + Description */}
+                <div className="flex items-start gap-6 md:gap-10 max-w-2xl">
+                  <span className="font-mono text-sm md:text-base text-black/30 font-semibold pt-1">
+                    0{index + 1}
                   </span>
                   <div>
-                    <h3 className="font-serif text-3xl md:text-5xl lg:text-6xl tracking-tight text-black transition-all duration-300 group-hover:italic group-hover:translate-x-1">
-                      {project.title}
-                    </h3>
-                    <p className="font-mono text-[11px] md:text-xs tracking-widest uppercase text-black/50 mt-1.5">
+                    <Link
+                      href={`/work/${project.slug}`}
+                      className="block group-hover:translate-x-1.5 transition-transform duration-300 focus-visible:outline-none"
+                    >
+                      <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight text-black transition-colors duration-300 group-hover:text-black">
+                        {project.title}
+                      </h3>
+                    </Link>
+                    <p className="font-mono text-xs tracking-widest uppercase text-emerald-700 font-medium mt-2">
                       {project.category}
+                    </p>
+                    <p className="font-sans text-sm md:text-base text-black/70 mt-3 line-clamp-2 font-normal leading-relaxed">
+                      {project.description}
                     </p>
                   </div>
                 </div>
 
-                {/* Tags + Year + Arrow */}
-                <div className="flex flex-wrap items-center gap-4 md:gap-8 self-start md:self-auto pl-12 md:pl-0">
-                  <div className="flex flex-wrap gap-2">
+                {/* Tech Tags + Actions */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-6 self-start lg:self-auto pl-12 lg:pl-0">
+                  <div className="flex flex-wrap gap-2 max-w-xs">
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="font-mono text-[10px] md:text-[11px] tracking-wider uppercase text-black/60 border border-black/15 px-2.5 py-1 rounded-sm bg-white"
+                        className="font-mono text-[10px] md:text-[11px] tracking-wider uppercase text-black/70 border border-black/15 px-2.5 py-1 rounded-sm bg-white"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
 
-                  <span className="font-mono text-xs text-black/40">
-                    {project.year}
-                  </span>
-
-                  <span className="font-serif text-xl md:text-2xl text-black transition-transform duration-300 group-hover:translate-x-2">
-                    →
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-mono text-xs uppercase tracking-wider border border-black/20 hover:border-black bg-white px-3.5 py-2 transition-all hover:bg-black hover:text-white"
+                    >
+                      Demo ↗
+                    </a>
+                    <Link
+                      href={`/work/${project.slug}`}
+                      className="font-mono text-xs uppercase tracking-wider bg-black text-white px-4 py-2 hover:bg-zinc-800 transition-all font-semibold flex items-center gap-1.5"
+                    >
+                      <span>Study</span>
+                      <span>→</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
 
               {/* Mobile Image Inline Preview */}
-              <div className="mt-6 block md:hidden relative aspect-video w-full overflow-hidden rounded border border-black/10">
+              <div className="mt-6 block md:hidden relative aspect-video w-full overflow-hidden rounded-sm border border-black/10">
                 <Image
                   src={project.cover}
                   alt={project.title}
@@ -148,7 +174,7 @@ export default function Work() {
                   className="object-cover"
                 />
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>

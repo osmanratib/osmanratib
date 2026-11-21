@@ -1,17 +1,17 @@
 # osmanratib
 
-> **Editorial / Swiss-Gallery Portfolio** — Monograph of Osman Ratib, Software Engineer & Digital Craftsman.
+> **Editorial / Swiss-Gallery Portfolio** — Monograph of Osman Ratib, Creative Developer & UI Architect.
 
-An Awwwards-caliber digital experience built with Next.js 16, TypeScript, GSAP, Lenis, and Framer Motion. Engineered around editorial Swiss typography, high-contrast monochrome design, and physics-driven motion choreography.
+An Awwwards-caliber digital experience built with Next.js 16, TypeScript, GSAP 3.15, Lenis, and Framer Motion. Engineered with razor-sharp geometric typography (Syne & Plus Jakarta Sans), high-contrast architectural layouts, and physics-driven motion choreography.
 
 ---
 
-## 🏛️ Concept: The Digital Monograph
+## 🏛️ Concept: The Architectural Flagship
 
-Built on the concept of an architectural and editorial publication:
-- **Swiss Grid Discipline**: 6-column underlying grid with subtle hairlines and generous whitespace.
-- **High-Contrast Monochrome**: Pure `#000000` on `#ffffff`, relying on typography scale, layout hierarchy, and motion rather than decorative color.
-- **Paper & Ink Motion**: Mask reveals, scroll-scrubbed opacity, magnetic micro-interactions, and inertia-driven smooth scrolling.
+Built around modern creative development principles:
+- **Architectural Grid Discipline**: 6-column underlying grid with subtle hairlines and balanced density.
+- **Ultra-Modern Typography**: `Syne` for monumental headlines + `Plus Jakarta Sans` for razor-sharp body text + `JetBrains Mono` for metadata precision.
+- **Physics & Motion**: Mask reveals, scroll-scrubbed opacity, magnetic micro-interactions, live local time ticker, and inertia-driven smooth scrolling.
 
 ---
 
@@ -19,9 +19,9 @@ Built on the concept of an architectural and editorial publication:
 
 | Role | Font Family | Characteristics |
 |---|---|---|
-| **Display / Headlines** | **Instrument Serif** | High-contrast classical serif with distinctive italic forms |
-| **Body & UI** | **Geist** | Modern geometric sans-serif tuned for readability |
-| **Metadata / Numbers** | **Geist Mono** | Strict tabular monospace for timestamps, tags, and indices |
+| **Display / Headlines** | **Syne** (700/800) | Futuristic, monumental, high-impact geometric architecture |
+| **Body & UI** | **Plus Jakarta Sans** | Modern geometric sans-serif tuned for readability & authority |
+| **Metadata / Code** | **JetBrains Mono** | Strict tabular monospace for timestamps, tags, and indices |
 
 ---
 
@@ -32,7 +32,7 @@ Built on the concept of an architectural and editorial publication:
 - **Smooth Scroll**: [Lenis](https://github.com/darkroomengineering/lenis) (inertia scroll + GSAP ScrollTrigger sync)
 - **Scroll Orchestration**: [GSAP](https://gsap.com/) + `ScrollTrigger` + `@gsap/react`
 - **Component & Layout Motion**: [Framer Motion](https://motion.dev/) (cursor springs, page transitions, word-by-word scroll scrubbing)
-- **Icons & Primitives**: Semantic SVG & typography directional cues (`→`, `↗`, `↓`)
+- **Icons & Directional Cues**: Semantic typography and SVG primitives (`→`, `↗`, `↓`)
 
 ---
 
@@ -41,8 +41,8 @@ Built on the concept of an architectural and editorial publication:
 ```
 src/
 ├─ app/
-│  ├─ layout.tsx            # Root layout, Lenis provider, cursor, transitions
-│  ├─ page.tsx              # Monograph home (Preloader, Hero, Work, About, Capabilities)
+│  ├─ layout.tsx            # Root layout, Google Fonts, Lenis provider, cursor, transitions
+│  ├─ page.tsx              # Monograph home (Preloader, Hero, Work, Process, About, Capabilities)
 │  ├─ work/[slug]/          # Dynamic case studies with deep architectural writeups
 │  │  ├─ page.tsx           # Static params & SEO metadata generation
 │  │  └─ CaseStudy.tsx      # Video showcase, challenges, outcomes & next links
@@ -51,7 +51,7 @@ src/
 │  └─ globals.css           # Tailwind v4, custom cursor rules, typography tokens
 ├─ components/
 │  ├─ layout/
-│  │  ├─ Header.tsx         # Sticky navigation, logo, availability pill & mobile drawer
+│  │  ├─ Header.tsx         # Navigation, live Dhaka time ticker, availability pill & mobile drawer
 │  │  ├─ Footer.tsx         # Contact section, marquee, magnetic copy-email CTA
 │  │  ├─ Cursor.tsx         # Physics spring cursor with interactive expansion
 │  │  └─ Preloader.tsx      # 0→100 counter & mask reveal (session-persisted)
@@ -63,13 +63,15 @@ src/
 │  ├─ providers/
 │  │  └─ SmoothScroll.tsx   # Lenis ↔ GSAP ScrollTrigger bridge
 │  └─ sections/
-│     ├─ Hero.tsx           # Giant display headline & subtle grid lines
-│     ├─ Work.tsx           # 3 selected works with cursor-following previews
-│     ├─ About.tsx          # Scroll-scrubbed opacity reveal paragraph
-│     └─ Capabilities.tsx   # Interactive line-draw discipline accordion
+│     ├─ Hero.tsx           # High-density hero with interactive project switcher & KPI strip
+│     ├─ Work.tsx           # 3 selected flagship works with cursor-following previews
+│     ├─ Process.tsx        # 4-stage engineering methodology breakdown
+│     ├─ About.tsx          # Scroll-scrubbed opacity reveal paragraph & portrait
+│     └─ Capabilities.tsx   # Interactive discipline matrix & deliverables
 ├─ data/
 │  └─ projects.ts           # Typed project records (CafeBee, Fixnest, Aura Gym)
 ├─ hooks/
+│  ├─ useDhakaTime.ts       # Real-time ticking clock (Asia/Dhaka UTC+6)
 │  ├─ useIsTouch.ts         # Touch device detection
 │  └─ useReducedMotion.ts   # Accessibility prefers-reduced-motion hook
 └─ lib/
@@ -81,7 +83,7 @@ src/
 
 ## ⚡ Performance & Polish
 
-- **Lighthouse Performance**: 95+ score target with optimized next/image priority loading
+- **Lighthouse Performance**: 99+ score target with optimized priority image loading
 - **Accessibility**: Semantic HTML5 elements, full keyboard navigation, `prefers-reduced-motion` compliance
 - **Touch-Aware**: Custom cursor dynamically disabled on mobile & touch displays
 - **Zero Layout Shift**: Strict aspect ratio preservation for images and videos
@@ -111,5 +113,5 @@ npm run build
 
 - **Developer**: Osman Ratib
 - **Location**: Dhaka, Bangladesh (UTC+6)
-- **Email**: [osmanratib.dev@gmail.com](mailto:osmanratib.dev@gmail.com)
+- **Email**: [osmanratib14@gmail.com](mailto:osmanratib14@gmail.com)
 - **GitHub**: [@osmanratib](https://github.com/osmanratib)
