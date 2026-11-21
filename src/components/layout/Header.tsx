@@ -21,7 +21,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -39,76 +39,66 @@ export default function Header() {
 
   return (
     <>
-      {/* Clean Minimal Floating Menubar */}
+      {/* Ultra-Clean Minimalist Header: Just Logo (Visible, No Name) + Just Menu Icon */}
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-md border-b border-black/10 py-3.5"
+            ? "bg-white/90 backdrop-blur-md py-4 border-b border-black/10"
             : "bg-transparent py-6"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
-          {/* Logo & Name */}
+          {/* Prominent, Highly Visible Logo (No Name) */}
           <Link
             href="/"
-            className="group flex items-center gap-3 focus-visible:outline-none"
+            aria-label="Home"
+            className="group relative flex items-center justify-center focus-visible:outline-none"
           >
-            <div className="relative h-8 w-8 overflow-hidden rounded-full border border-black/15 bg-black/5 transition-transform duration-300 group-hover:scale-105">
+            <motion.div
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative h-12 w-12 md:h-14 md:w-14 overflow-hidden rounded-full border border-black/15 bg-white p-2 shadow-sm transition-shadow hover:shadow-md"
+            >
               <Image
                 src="/logo.png"
                 alt="Osman Ratib"
                 fill
-                sizes="32px"
+                sizes="(max-width: 768px) 48px, 56px"
                 className="object-contain p-1"
                 priority
               />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-heading text-sm font-bold tracking-tight text-black uppercase">
-                Osman Ratib
-              </span>
-              <span className="font-mono text-[10px] tracking-wider text-black/50 uppercase">
-                Creative Dev & UI
-              </span>
-            </div>
+            </motion.div>
           </Link>
 
-          {/* Center Availability Indicator (Clean & Minimal) */}
-          <div className="hidden sm:flex items-center gap-2 border border-black/10 bg-black/[0.02] px-3.5 py-1 rounded-full">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <span className="font-mono text-[11px] font-medium tracking-wider text-black/70 uppercase">
-              Available 2026
-            </span>
-          </div>
-
-          {/* Menubar Trigger Button */}
-          <div className="flex items-center gap-4">
-            <a
-              href="mailto:osmanratib14@gmail.com"
-              className="hidden md:inline-block font-mono text-xs tracking-wider uppercase text-black/60 hover:text-black transition-colors"
-            >
-              osmanratib14@gmail.com
-            </a>
-
-            <button
-              type="button"
-              onClick={() => setIsOpen(!isOpen)}
-              className="group flex items-center gap-2.5 border border-black bg-black px-4 py-2 text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer rounded-xs"
-              aria-label="Toggle menu bar"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 group-hover:bg-black transition-colors" />
-              <span className="font-mono text-xs font-semibold tracking-widest uppercase">
-                {isOpen ? "Close" : "Menu"}
-              </span>
-            </button>
-          </div>
+          {/* Just the Menu Icon */}
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            className="group relative flex h-12 w-12 items-center justify-center rounded-full border border-black/20 bg-white hover:bg-black hover:border-black transition-all duration-300 cursor-pointer shadow-xs"
+          >
+            <div className="flex flex-col items-center justify-center gap-1.5 w-5">
+              <span
+                className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
+                  isOpen ? "rotate-45 translate-y-2" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
+                  isOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
+                  isOpen ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              />
+            </div>
+          </button>
         </div>
       </header>
 
-      {/* Clean Fullscreen / Sliding Architectural Menubar Overlay */}
+      {/* Fullscreen Architectural Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -118,21 +108,17 @@ export default function Header() {
             transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-50 flex flex-col justify-between bg-black text-white px-8 md:px-20 pt-10 pb-12"
           >
-            {/* Top Bar inside Overlay */}
+            {/* Top Bar inside Menu Overlay */}
             <div className="flex items-center justify-between border-b border-white/10 pb-6">
-              <div className="flex items-center gap-3">
-                <div className="relative h-7 w-7 rounded-full bg-white/10 overflow-hidden">
-                  <Image
-                    src="/logo.png"
-                    alt="Osman Ratib"
-                    fill
-                    sizes="28px"
-                    className="object-contain p-1 invert"
-                  />
-                </div>
-                <span className="font-heading text-sm font-bold tracking-tight uppercase text-white">
-                  Osman Ratib
-                </span>
+              {/* Prominent Logo inside Menu */}
+              <div className="relative h-12 w-12 rounded-full bg-white/10 p-2 overflow-hidden border border-white/20">
+                <Image
+                  src="/logo.png"
+                  alt="Osman Ratib"
+                  fill
+                  sizes="48px"
+                  className="object-contain p-1 invert"
+                />
               </div>
 
               <div className="flex items-center gap-6">
@@ -143,9 +129,10 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="font-mono text-xs tracking-widest uppercase border border-white/30 hover:border-white px-4 py-2 hover:bg-white hover:text-black transition-all cursor-pointer rounded-xs"
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/30 hover:bg-white hover:text-black transition-all cursor-pointer"
+                  aria-label="Close menu"
                 >
-                  Close [ESC]
+                  <span className="font-mono text-sm">✕</span>
                 </button>
               </div>
             </div>
