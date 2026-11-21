@@ -11,28 +11,32 @@ if (typeof window !== "undefined") {
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Respect reduced motion preference
+    // Respect user's motion preferences
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
     const lenis = new Lenis({
-      lerp: 0.09,
+      duration: 1.3,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
       smoothWheel: true,
-      syncTouch: false,
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1.6,
     });
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    const tick = (time: number) => {
+    const updateLenis = (time: number) => {
       lenis.raf(time * 1000);
     };
 
-    gsap.ticker.add(tick);
+    gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      gsap.ticker.remove(tick);
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
   }, []);
