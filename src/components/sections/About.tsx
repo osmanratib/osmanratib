@@ -81,11 +81,11 @@ export default function About() {
         <div className="lg:col-span-4 lg:col-start-9 flex flex-col gap-6">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xs border border-black/15 bg-neutral-100 shadow-sm">
             <Image
-              src="/about.jpg"
+              src="/about-main.png"
               alt="Osman Ratib"
               fill
               sizes="(max-width: 1024px) 100vw, 380px"
-              className="object-cover grayscale contrast-105 hover:grayscale-0 transition-all duration-700"
+              className="object-contain p-2 grayscale contrast-105 hover:grayscale-0 transition-all duration-700"
             />
           </div>
 
