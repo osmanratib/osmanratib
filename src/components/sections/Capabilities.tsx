@@ -16,25 +16,25 @@ const CAPABILITIES: CapabilityItem[] = [
   {
     id: "01",
     title: "Front-End Engineering",
-    subtitle: "High-performance interactive web applications",
+    subtitle: "High-performance web applications",
     description:
-      "Crafting production-grade architectures with Next.js 16, React 19, TypeScript, and modern state paradigms. Engineered for zero hydration penalty and optimal Core Web Vitals.",
+      "Crafting production-grade architectures with Next.js, React, TypeScript, and modern state paradigms. Engineered for zero hydration penalty and optimal Core Web Vitals.",
     deliverables: ["Single-Page Applications", "SSR / Edge Rendering", "Design System Implementation"],
-    techStack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4"],
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
   },
   {
     id: "02",
     title: "Motion & Creative Interaction",
-    subtitle: "Micro-interactions, scroll timelines & fluid transitions",
+    subtitle: "Micro-interactions and fluid physics",
     description:
       "Bringing screens to life through choreographed motion, smooth-scroll inertia, spring physics, and canvas rendering. Creating memorable moments that amplify user engagement without bloat.",
     deliverables: ["Scroll-Triggered Sequences", "Page Transitions", "SVG Line Draws & Mask Reveals"],
-    techStack: ["GSAP 3.15", "ScrollTrigger", "Framer Motion", "Lenis"],
+    techStack: ["GSAP", "ScrollTrigger", "Framer Motion", "Lenis"],
   },
   {
     id: "03",
     title: "Design Systems & UI Architecture",
-    subtitle: "Swiss grid precision and typographic discipline",
+    subtitle: "Grid precision and component discipline",
     description:
       "Bridging the gap between Figma designs and pristine code. Translating high-contrast editorial concepts into reusable, accessible component libraries that scale across viewports.",
     deliverables: ["Component Libraries", "WCAG 2.1 AA Compliance", "Dark/Light Design Tokens"],
@@ -43,7 +43,7 @@ const CAPABILITIES: CapabilityItem[] = [
   {
     id: "04",
     title: "Performance & Technical SEO",
-    subtitle: "Lighthouse 99+ score optimization & clean metadata",
+    subtitle: "Speed optimization and clean metadata",
     description:
       "Rigorous profiling of bundle size, asset pipeline caching, font preloading, and dynamic OpenGraph generation to ensure maximum discoverability and instantaneous load speeds.",
     deliverables: ["Bundle Optimization", "Automated Sitemap & RSS", "LCP / FID / CLS Tuning"],
@@ -59,22 +59,22 @@ export default function Capabilities() {
       id="capabilities"
       className="relative px-6 md:px-12 py-24 md:py-36 border-b border-black/10 bg-white"
     >
-      {/* Section Header */}
+      {/* Clean Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-black/10 pb-6 mb-12">
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs font-semibold bg-black text-white px-2 py-0.5 rounded-xs">
             04
           </span>
-          <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase text-black">
+          <h2 className="font-display text-3xl md:text-4xl uppercase tracking-tight text-black">
             Capabilities & Disciplines
           </h2>
         </div>
-        <div className="font-mono text-xs tracking-widest uppercase text-black/50">
-          Technical Services & Craft
+        <div className="font-mono text-xs tracking-wider uppercase text-black/50">
+          Core Services & Tooling
         </div>
       </div>
 
-      {/* Accordion / Line-Draw List */}
+      {/* Accordion List */}
       <div className="divide-y divide-black/10">
         {CAPABILITIES.map((cap) => {
           const isOpen = activeItem === cap.id;
@@ -90,10 +90,10 @@ export default function Capabilities() {
                     {cap.id}
                   </span>
                   <div>
-                    <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-black transition-all duration-300 group-hover:translate-x-1">
+                    <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-tight text-black transition-all duration-300 group-hover:translate-x-1">
                       {cap.title}
                     </h3>
-                    <p className="font-mono text-xs tracking-widest uppercase text-black/50 mt-1.5">
+                    <p className="font-mono text-xs tracking-wider uppercase text-black/50 mt-1">
                       {cap.subtitle}
                     </p>
                   </div>
@@ -132,7 +132,7 @@ export default function Capabilities() {
                           {cap.techStack.map((tech) => (
                             <span
                               key={tech}
-                              className="font-mono text-[10px] tracking-wider uppercase bg-black/[0.04] text-black/70 px-2.5 py-1 border border-black/10 rounded-sm"
+                              className="font-mono text-[11px] tracking-wider uppercase bg-black/[0.04] text-black/70 px-2.5 py-1 border border-black/10 rounded-xs"
                             >
                               {tech}
                             </span>
@@ -141,8 +141,8 @@ export default function Capabilities() {
                       </div>
 
                       <div className="md:col-span-5 border-l border-black/10 pl-6 space-y-2">
-                        <span className="font-mono text-xs tracking-widest uppercase text-black/45 block mb-2 font-semibold">
-                          Key Deliverables
+                        <span className="font-mono text-xs tracking-wider uppercase text-black/45 block mb-2 font-semibold">
+                          Deliverables
                         </span>
                         <ul className="space-y-1.5 font-mono text-xs text-black/70">
                           {cap.deliverables.map((item, idx) => (
