@@ -78,7 +78,7 @@ export default function Header() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
               <span className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-wider text-emerald-900 uppercase">
-                Available for 2026 Contracts
+                Available for work
               </span>
             </div>
 
