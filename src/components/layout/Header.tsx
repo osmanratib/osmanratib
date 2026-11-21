@@ -39,7 +39,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Ultra-Clean Minimalist Header: Just Logo (Visible, No Name) + Just Menu Icon */}
+      {/* Ultra-Clean Minimalist Header: Prominent Logo + Available for 2026 Contracts + Menu Icon */}
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
@@ -70,31 +70,44 @@ export default function Header() {
             </motion.div>
           </Link>
 
-          {/* Just the Menu Icon */}
-          <button
-            type="button"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            className="group relative flex h-12 w-12 items-center justify-center rounded-full border border-black/20 bg-white hover:bg-black hover:border-black transition-all duration-300 cursor-pointer shadow-xs"
-          >
-            <div className="flex flex-col items-center justify-center gap-1.5 w-5">
-              <span
-                className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
-                  isOpen ? "rotate-45 translate-y-2" : ""
-                }`}
-              />
-              <span
-                className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
-                  isOpen ? "opacity-0" : ""
-                }`}
-              />
-              <span
-                className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
-                  isOpen ? "-rotate-45 -translate-y-2" : ""
-                }`}
-              />
+          {/* Right Controls: Available for 2026 Contracts Badge + Menu Icon */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-2 border border-emerald-500/30 bg-emerald-50/80 px-3.5 py-1.5 rounded-full shadow-xs">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              <span className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-wider text-emerald-900 uppercase">
+                Available for 2026 Contracts
+              </span>
             </div>
-          </button>
+
+            {/* Menu Icon Button */}
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              className="group relative flex h-12 w-12 items-center justify-center rounded-full border border-black/20 bg-white hover:bg-black hover:border-black transition-all duration-300 cursor-pointer shadow-xs shrink-0"
+            >
+              <div className="flex flex-col items-center justify-center gap-1.5 w-5">
+                <span
+                  className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
+                    isOpen ? "rotate-45 translate-y-2" : ""
+                  }`}
+                />
+                <span
+                  className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
+                    isOpen ? "opacity-0" : ""
+                  }`}
+                />
+                <span
+                  className={`h-0.5 w-5 bg-black group-hover:bg-white transition-all duration-300 ${
+                    isOpen ? "-rotate-45 -translate-y-2" : ""
+                  }`}
+                />
+              </div>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -121,7 +134,14 @@ export default function Header() {
                 />
               </div>
 
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6">
+                <div className="hidden sm:flex items-center gap-2 border border-emerald-400/30 bg-emerald-950/40 px-3 py-1 rounded-full">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  <span className="font-mono text-[10px] tracking-wider text-emerald-300 uppercase">
+                    Available for 2026 Contracts
+                  </span>
+                </div>
+
                 <span className="hidden sm:inline font-mono text-xs text-white/50 tracking-widest uppercase">
                   Dhaka {dhakaTime}
                 </span>

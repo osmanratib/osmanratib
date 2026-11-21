@@ -73,13 +73,10 @@ export default function Hero() {
       {/* Top Meta Strip */}
       <div className="px-6 md:px-12 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/10 pb-4 mb-6">
         <div className="flex items-center justify-center sm:justify-start gap-3 font-mono text-xs tracking-wider uppercase text-black/60">
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-          </span>
-          <span className="font-semibold text-black">Available for 2026 Contracts</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-black/60" />
+          <span className="font-semibold text-black">Remote Worldwide</span>
           <span className="text-black/30">•</span>
-          <span>Remote Worldwide</span>
+          <span>Digital Engineering & Motion</span>
         </div>
 
         <div className="flex items-center justify-center sm:justify-end gap-4 font-mono text-xs tracking-wider uppercase text-black/50">
