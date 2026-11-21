@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { useDhakaTime } from "@/hooks/useDhakaTime";
 
-const NAV_LINKS = [
+const MENU_ITEMS = [
   { href: "/#work", label: "Selected Works", index: "01" },
   { href: "/#process", label: "Process", index: "02" },
   { href: "/#about", label: "About", index: "03" },
@@ -15,35 +15,45 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dhakaTime = useDhakaTime();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 40);
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
     <>
+      {/* Clean Minimal Floating Menubar */}
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? "bg-white/85 backdrop-blur-md border-b border-black/10 py-3.5 shadow-xs"
-            : "bg-transparent py-5"
+            ? "bg-white/90 backdrop-blur-md border-b border-black/10 py-3.5"
+            : "bg-transparent py-6"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
-          {/* Brand Identity */}
+          {/* Logo & Name */}
           <Link
             href="/"
             className="group flex items-center gap-3 focus-visible:outline-none"
           >
-            <div className="relative h-8 w-8 overflow-hidden rounded-full border border-black/15 bg-black/5 transition-transform duration-300 group-hover:scale-105 shadow-xs">
+            <div className="relative h-8 w-8 overflow-hidden rounded-full border border-black/15 bg-black/5 transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/logo.png"
                 alt="Osman Ratib"
@@ -54,137 +64,154 @@ export default function Header() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-sm font-bold tracking-tight text-black uppercase">
+              <span className="font-heading text-sm font-bold tracking-tight text-black uppercase">
                 Osman Ratib
               </span>
-              <span className="font-mono text-[10px] tracking-widest text-black/50 uppercase">
-                Creative Dev & Architect
+              <span className="font-mono text-[10px] tracking-wider text-black/50 uppercase">
+                Creative Dev & UI
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-7 lg:flex">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="group relative flex items-baseline gap-1.5 py-1 text-xs font-mono tracking-widest text-black/70 uppercase transition-colors hover:text-black"
-              >
-                <span className="text-[10px] text-black/30 group-hover:text-black/60 transition-colors">
-                  {link.index}
-                </span>
-                <span className="font-medium">{link.label}</span>
-                <span className="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-          </nav>
-
-          {/* Right Live Status & CTA */}
-          <div className="hidden items-center gap-4 sm:flex">
-            {/* Live Clock Pill */}
-            <div className="hidden xl:flex items-center gap-2 border border-black/10 px-3 py-1 rounded-full bg-black/[0.02]">
-              <span className="h-1.5 w-1.5 rounded-full bg-black/40" />
-              <span className="font-mono text-[11px] tracking-wider text-black/60 uppercase">
-                Dhaka {dhakaTime}
-              </span>
-            </div>
-
-            {/* Availability Pill */}
-            <div className="flex items-center gap-2 border border-emerald-500/30 bg-emerald-50/50 px-3 py-1 rounded-full">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              <span className="font-mono text-[11px] font-medium tracking-wider text-emerald-800 uppercase">
-                Available 2026
-              </span>
-            </div>
-
-            <a
-              href="mailto:osmanratib14@gmail.com"
-              className="group relative overflow-hidden rounded-sm border border-black bg-black px-4 py-1.5 font-mono text-xs tracking-widest text-white uppercase transition-all duration-300 hover:bg-white hover:text-black"
-            >
-              <span className="relative z-10 font-semibold">Hire Me</span>
-            </a>
+          {/* Center Availability Indicator (Clean & Minimal) */}
+          <div className="hidden sm:flex items-center gap-2 border border-black/10 bg-black/[0.02] px-3.5 py-1 rounded-full">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            <span className="font-mono text-[11px] font-medium tracking-wider text-black/70 uppercase">
+              Available 2026
+            </span>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex flex-col gap-1.5 p-2 lg:hidden cursor-pointer"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`h-0.5 w-6 bg-black transition-transform duration-300 ${
-                mobileMenuOpen ? "translate-y-2 rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`h-0.5 w-6 bg-black transition-opacity duration-300 ${
-                mobileMenuOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`h-0.5 w-6 bg-black transition-transform duration-300 ${
-                mobileMenuOpen ? "-translate-y-2 -rotate-45" : ""
-              }`}
-            />
-          </button>
+          {/* Menubar Trigger Button */}
+          <div className="flex items-center gap-4">
+            <a
+              href="mailto:osmanratib14@gmail.com"
+              className="hidden md:inline-block font-mono text-xs tracking-wider uppercase text-black/60 hover:text-black transition-colors"
+            >
+              osmanratib14@gmail.com
+            </a>
+
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className="group flex items-center gap-2.5 border border-black bg-black px-4 py-2 text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer rounded-xs"
+              aria-label="Toggle menu bar"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 group-hover:bg-black transition-colors" />
+              <span className="font-mono text-xs font-semibold tracking-widest uppercase">
+                {isOpen ? "Close" : "Menu"}
+              </span>
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Drawer */}
+      {/* Clean Fullscreen / Sliding Architectural Menubar Overlay */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: "-100%" }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-30 flex flex-col justify-between bg-white px-8 pt-28 pb-10 lg:hidden"
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-50 flex flex-col justify-between bg-black text-white px-8 md:px-20 pt-10 pb-12"
           >
-            <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-black/10 pb-4">
-                <span className="font-mono text-xs tracking-widest text-black/40 uppercase">
-                  Index
-                </span>
-                <span className="font-mono text-xs text-black/50">
-                  Dhaka {dhakaTime}
+            {/* Top Bar inside Overlay */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-6">
+              <div className="flex items-center gap-3">
+                <div className="relative h-7 w-7 rounded-full bg-white/10 overflow-hidden">
+                  <Image
+                    src="/logo.png"
+                    alt="Osman Ratib"
+                    fill
+                    sizes="28px"
+                    className="object-contain p-1 invert"
+                  />
+                </div>
+                <span className="font-heading text-sm font-bold tracking-tight uppercase text-white">
+                  Osman Ratib
                 </span>
               </div>
-              <nav className="flex flex-col gap-5">
-                {NAV_LINKS.map((link) => (
+
+              <div className="flex items-center gap-6">
+                <span className="hidden sm:inline font-mono text-xs text-white/50 tracking-widest uppercase">
+                  Dhaka {dhakaTime}
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="font-mono text-xs tracking-widest uppercase border border-white/30 hover:border-white px-4 py-2 hover:bg-white hover:text-black transition-all cursor-pointer rounded-xs"
+                >
+                  Close [ESC]
+                </button>
+              </div>
+            </div>
+
+            {/* Navigation Links in Clean Bold Typography */}
+            <div className="my-auto py-8">
+              <span className="font-mono text-xs tracking-widest uppercase text-white/40 block mb-6">
+                Navigation Index
+              </span>
+              <nav className="flex flex-col gap-4 md:gap-6">
+                {MENU_ITEMS.map((item) => (
                   <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-baseline gap-4 font-display text-3xl font-bold tracking-tight text-black"
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="group flex items-baseline gap-4 md:gap-8 focus-visible:outline-none"
                   >
-                    <span className="font-mono text-xs text-black/40">
-                      {link.index}
+                    <span className="font-mono text-xs md:text-sm text-white/40 group-hover:text-emerald-400 transition-colors">
+                      {item.index}
                     </span>
-                    <span>{link.label}</span>
+                    <span className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal uppercase tracking-tight text-white transition-all duration-300 group-hover:translate-x-3 group-hover:text-emerald-400">
+                      {item.label}
+                    </span>
                   </a>
                 ))}
               </nav>
             </div>
 
-            <div className="space-y-4 border-t border-black/10 pt-6">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                <span className="font-mono text-xs tracking-wider text-black/60 uppercase">
-                  Available for contracts & full-time roles
-                </span>
+            {/* Bottom Contact & Quick Details */}
+            <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row md:items-center justify-between gap-6 font-mono text-xs">
+              <div className="flex items-center gap-4">
+                <span className="text-white/50">Direct Email:</span>
+                <a
+                  href="mailto:osmanratib14@gmail.com"
+                  className="text-white hover:text-emerald-400 font-semibold underline underline-offset-4"
+                >
+                  osmanratib14@gmail.com
+                </a>
               </div>
-              <a
-                href="mailto:osmanratib14@gmail.com"
-                className="block text-center border border-black bg-black py-3.5 font-mono text-xs tracking-widest text-white uppercase font-semibold"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                osmanratib14@gmail.com
-              </a>
+
+              <div className="flex items-center gap-6 text-white/60">
+                <a
+                  href="https://github.com/osmanratib"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  GitHub ↗
+                </a>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  LinkedIn ↗
+                </a>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Twitter / X ↗
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
